@@ -1,7 +1,7 @@
 import torch.utils.data as data
 
 
-class AdultDataset(data.Dataset):
+class DotaDataset(data.Dataset):
 
     def __init__(self, X, y):
 
