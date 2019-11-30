@@ -13,14 +13,15 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 
 from model import MultiLayerPerceptron
-from dataset import AdultDataset
-from util import *
+from dataset import DotaDataset
+
 
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import imshow
 
 from scipy.signal import savgol_filter
+'''
 matches = pd.read_csv('data-copy.csv')
 data = matches[['dire_team', 'radiant_team','radiant_win']]
 #data['radiant_team'] = data['radiant_team'] + 129
@@ -39,23 +40,13 @@ for i in range(0,dire_picks.size):
     for j in range(0,5):
         picks_onehot[i][dire_picks[i][j] - 1] = 1
         picks_onehot[i][radiant_picks[i][j] - 1 + 129] = 1
+'''
+picks_onehot=np.loadtxt('input',dtype=float)
+radiant_win_onehot=np.loadtxt('label',dtype=float)
 winrateforall =[]
 
-# find if there is hero never be selected
-count0 = []
-for i in range(len(picks_onehot[0])):
-    count=0
-    for j in range(len(picks_onehot)):
-        count+=picks_onehot[j][i]
-    count0.append(count)
-for i in range(len(count0)):
-    if count0[i]==0:
-        print(i)
-        #return False
 
-print(count0)
-# 23 114 115 116 117 121 122 123 124 125 152 243 244 245 246 250 251 252 253 254 255 256 not picked
-
+#This is the overall win rate for each hero
 #winrate overall
 for j in range(129):
     wincount = 0
@@ -80,7 +71,29 @@ for j in range(129):
     winrateforall.append(winrate)
 print(winrateforall)
 
+#put the data into Excel so can produce some statistic features
+'''
+import xlsxwriter
+
+workbook = xlsxwriter.Workbook('dataAnalysis winrateforall.xlsx')
+worksheet = workbook.add_worksheet()
+
+row = 1
+column = 1
+
+# iterating through content list
+for item in winrateforall:
+    # write operation perform
+    worksheet.write(row, column, item)
+
+    # incrementing the value of row by one
+    # with each iteratons.
+    column += 1
+
+workbook.close()
+'''
 #each hero's winrate against other heros
+
 winvsrate_for_all=[]
 for j in range(129):
     winvsrate_for_onehero=[]
@@ -112,12 +125,22 @@ for j in range(129):
 # a dimension 129*129 matrix element winvsrate_for_all and winvsrate_for_all[i] represents the winrate for the ith hero against
 #all other 128 heros and winvsrate_for_all[i][j] is the win rate when ith hero facing jth hero. note winvsrate_for_all[i][i]
 #means the hero is facing himself which is impossible so the value will be 'NL'
-print(len(winvsrate_for_all),len(winvsrate_for_all[0]))
+
+'''
+workbook = xlsxwriter.Workbook('data Analysis.xlsx')
+worksheet = workbook.add_worksheet()
+row = 5
+
 for i in range(len(winvsrate_for_all)):
-    print(winvsrate_for_all[i])
+    col = 1
+    for j in range(len(winvsrate_for_all[0])):
 
+        worksheet.write(row, col, winvsrate_for_all[i][j])
+        col+=1
+    row += 1
 
-
+workbook.close()
+'''
 
 
 
