@@ -15,3 +15,4 @@ class LogisticRegressionModel(nn.Module):
         x=nn.functional.softmax(x)
 
         return x
+    testcommmit
