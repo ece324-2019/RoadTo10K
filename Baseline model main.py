@@ -9,6 +9,12 @@ from dataset import DotaDataset
 from Baselinemodel import LogisticRegressionModel
 import matplotlib.pyplot as plt
 
+
+
+picks_onehot=np.loadtxt('input',dtype=float)
+radiant_win_onehot=np.loadtxt('label',dtype=float)
+#Note since our file'input' is too large to push onto the Github, same procedure below can produce the
+#input one hot vector 'picks_onehot' and corresponding label 'radiant_win_onehot'
 '''
 matches = pd.read_csv('data_balanced.csv')
 data = matches[['dire_team', 'radiant_team','radiant_win']]
@@ -28,13 +34,7 @@ for i in range(0,dire_picks.size):
     for j in range(0,5):
         picks_onehot[i][dire_picks[i][j] - 1] = 1
         picks_onehot[i][radiant_picks[i][j] - 1 + 129] = 1
-torch.manual_seed(10)
-processed_data = pd.DataFrame(picks_onehot)
-processed_data.to_csv('processed_test.csv')
 '''
-
-picks_onehot=np.loadtxt('input',dtype=float)
-radiant_win_onehot=np.loadtxt('label',dtype=float)
 
 torch.manual_seed(10)
 train_data, validation_data, train_label, valid_label = train_test_split(picks_onehot, radiant_win_onehot,
