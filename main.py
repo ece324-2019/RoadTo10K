@@ -23,7 +23,29 @@ def evaluate(model, val_loader):
 
 picks_onehot = np.loadtxt('input', dtype=int)
 radiant_win_onehot = np.loadtxt('label', dtype=int)
+#Note since our file'input' is too large to push onto the Github, same procedure below can produce the
+#input one hot vector 'picks_onehot' and corresponding label 'radiant_win_onehot'
+'''
+matches = pd.read_csv('data_balanced.csv')
+data = matches[['dire_team', 'radiant_team','radiant_win']]
+#data['radiant_team'] = data['radiant_team'] + 129
+dire_picks= data['dire_team'].to_numpy()
+radiant_picks = data['radiant_team'].to_numpy()
+radiant_win = data['radiant_win'].to_numpy()
+picks_onehot = np.zeros((dire_picks.size,258), dtype=int)
+radiant_win_onehot = np.zeros(dire_picks.size, dtype=int)
+for i in range(0,dire_picks.size):
+    dire_picks[i] = np.asarray(dire_picks[i].split(",")).astype(int)
+    radiant_picks[i] = np.asarray(radiant_picks[i].split(",")).astype(int)
+    if radiant_win[i]:
+        radiant_win_onehot[i] = 1
+    else:
+        radiant_win_onehot[i] = 0
+    for j in range(0,5):
+        picks_onehot[i][dire_picks[i][j] - 1] = 1
+        picks_onehot[i][radiant_picks[i][j] - 1 + 129] = 1
 
+'''
 
 batch_size = 1000
 epochs = 1000
