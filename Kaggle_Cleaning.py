@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 
 
-matches = pd.read_csv('Kaggle2/train.csv')
+matches = pd.read_csv('Kaggle raw data.csv')
 #with pd.option_context('display.max_rows', None, 'display.max_columns', None):
     #print(matches.describe())
     #print(matches.head())
