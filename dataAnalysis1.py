@@ -21,8 +21,14 @@ import matplotlib.pyplot as plt
 from matplotlib.pyplot import imshow
 
 from scipy.signal import savgol_filter
+
+picks_onehot=np.loadtxt('input',dtype=float)
+radiant_win_onehot=np.loadtxt('label',dtype=float)
+
+#Note since our file'input' is too large to push onto the Github, same procedure below can produce the
+#input one hot vector 'picks_onehot' and corresponding label 'radiant_win_onehot'
 '''
-matches = pd.read_csv('data-copy.csv')
+matches = pd.read_csv('data_balanced.csv')
 data = matches[['dire_team', 'radiant_team','radiant_win']]
 #data['radiant_team'] = data['radiant_team'] + 129
 dire_picks= data['dire_team'].to_numpy()
@@ -41,11 +47,8 @@ for i in range(0,dire_picks.size):
         picks_onehot[i][dire_picks[i][j] - 1] = 1
         picks_onehot[i][radiant_picks[i][j] - 1 + 129] = 1
 '''
-picks_onehot=np.loadtxt('input',dtype=float)
-radiant_win_onehot=np.loadtxt('label',dtype=float)
+
 winrateforall =[]
-
-
 #This is the overall win rate for each hero
 #winrate overall
 for j in range(129):
